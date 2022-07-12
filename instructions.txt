@@ -1,0 +1,4 @@
+Battleships is a game with the ultimate goal of destroying all your opponents battleships, without losing all of yours.
+At the start of the game, you set the coordinates of all your ships, and then you try to destroy all the computers ships.
+Whoever destroys all 5 of the others ships first, wins.
+Good luck!

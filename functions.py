@@ -30,6 +30,12 @@ def menu():
         return None
 
 
+def instructions():
+    instructions = open("instructions.txt", "r")
+    print(instructions.read())
+    instructions.close()
+
+
 def new_game():
     player_grid = deepcopy(grid)
     computer_grid = deepcopy(grid)
@@ -55,7 +61,6 @@ def new_game():
         if computer_grid[random_letter][random_num] == '':
             computer_grid[random_letter][random_num] = 'B'
             j += 1
-    display_grid(computer_grid)
     play_game(player_grid, computer_grid)
 
 
