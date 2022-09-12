@@ -40,6 +40,15 @@ def new_game():
     player_grid = deepcopy(grid)
     computer_grid = deepcopy(grid)
     display_grid(player_grid)
+    hm_grid = deepcopy(grid)
+    display_grid(hm_grid)
+    player_hits = 0
+    computer_hits = 0
+    player_turn = True
+    player_targetted = []
+    computer_targetted = []
+    game_data = [player_grid, computer_grid, player_turn, hm_grid,
+                 player_hits, computer_hits, player_targetted, computer_targetted]
 
     i = 0
     while i < number_of_boats:
@@ -61,17 +70,21 @@ def new_game():
         if computer_grid[random_letter][random_num] == '':
             computer_grid[random_letter][random_num] = 'B'
             j += 1
-    play_game(player_grid, computer_grid)
+    play_game(game_data)
 
 
-def play_game(player_grid, computer_grid):
-    hm_grid = deepcopy(grid)
+def play_game(game_data):
+    hm_grid = game_data[3]
     display_grid(hm_grid)
-    player_hits = 0
-    computer_hits = 0
-    player_turn = True
-    player_targetted = []
-    computer_targetted = []
+    player_hits = game_data[4]
+    computer_hits = game_data[5]
+    player_turn = game_data[2]
+    player_targetted = game_data[6]
+    computer_targetted = game_data[7]
+    player_grid = game_data[0]
+    computer_grid = game_data[1]
+
+    save_game(game_data)
 
     while player_hits < 5 and computer_hits < 5:
         if player_turn == True:
@@ -111,11 +124,34 @@ def play_game(player_grid, computer_grid):
                 print("One of your ships has been destroyed!")
 
             player_turn = True
+            save_game(game_data)
 
     if player_hits == 5:
         print("You win!")
     else:
         print("You lose")
+
+
+def resume_game():
+    game_data = []
+    vars = open("vars.txt", "r")
+
+    for variable in vars:
+        game_data.append(variable)
+
+    vars.close()
+
+    play_game(game_data)
+
+
+def save_game(game_data):
+    vars = open("vars.txt", "w")
+
+    for variable in game_data:
+        vars.write(variable)
+        vars.write("\n")
+
+    vars.close()
 
 
 def display_grid(grid):
